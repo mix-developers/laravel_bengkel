@@ -6,11 +6,7 @@
                     <h5 class="m-b-10">{{ $title }}</h5>
                 </div>
                 <ul class="breadcrumb">
-                    @if (Auth::user()->role == 'admin')
-                        <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Dashboard</a></li>
-                    @else
-                        <li class="breadcrumb-item"><a href="{{ url('/konter') }}">Dashboard</a></li>
-                    @endif
+                    <li class="breadcrumb-item"><a href="{{ url('/home') }}">Dashboard</a></li>
                     <li class="breadcrumb-item">{{ $title }}</li>
                 </ul>
             </div>

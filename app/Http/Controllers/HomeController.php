@@ -31,6 +31,6 @@ class HomeController extends Controller
             'users' => $users,
         ];
 
-        return view('home', $data);
+        return view('pages.dashboard', $data);
     }
 }

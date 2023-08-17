@@ -26,11 +26,11 @@ class HomeController extends Controller
     {
         $users = User::count();
 
-        $widget = [
+        $data = [
+            'title' => 'Dashboard',
             'users' => $users,
-            //...
         ];
 
-        return view('home', compact('widget'));
+        return view('home', $data);
     }
 }

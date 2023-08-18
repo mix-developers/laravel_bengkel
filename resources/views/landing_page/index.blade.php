@@ -69,8 +69,9 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="ps-lg-5 text-center">
-                        <img loading="lazy" decoding="async" src="{{ asset('img/banner.png') }}" alt="banner image"
+                        <img loading="lazy" decoding="async" src="{{ asset('img/bengkel.png') }}" alt="banner image"
                             class="w-100">
+
                     </div>
                 </div>
             </div>

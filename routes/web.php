@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\frontController;
 use App\Http\Controllers\MechanicalControler;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PartStokController;
@@ -18,9 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [frontController::class, 'index']);
 
 Auth::routes(['verify' => true]);
 Route::middleware('verified')->group(function () {

@@ -1,6 +1,6 @@
 <head>
     <meta charset="utf-8">
-    <title>Wallet - Payday Loan Service Template</title>
+    <title>{{ $title . ' | ' . env('APP_NAME') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="description" content="This is meta description">
     <meta name="author" content="Themefisher">

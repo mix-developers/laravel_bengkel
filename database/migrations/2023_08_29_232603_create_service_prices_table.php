@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('service_statuses', function (Blueprint $table) {
+        Schema::create('service_prices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_service');
-            $table->foreignId('id_user');
-            $table->string('status');
-            $table->string('description');
+            $table->string('price');
             $table->timestamps();
 
             $table->foreign('id_service')->references('id')->on('services');
-            $table->foreign('id_user')->references('id')->on('users');
         });
     }
 
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_statuses');
+        Schema::dropIfExists('service_prices');
     }
 };

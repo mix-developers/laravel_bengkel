@@ -29,11 +29,14 @@ class PartStokController extends Controller
         $PartStok->id_part = $request->id_part;
         $PartStok->stok = $request->stok;
         $PartStok->type = $request->type;
-        if ($PartStok->save()) {
-
-            return redirect()->back()->with('success', 'Berhasil menambahkan data');
+        //check stok
+        $cekStok = PartStok::getStok($request->id_part);
+        // dd($cekStok);
+        if ($request->type == 0 && $request->stok > $cekStok) {
+            return redirect()->back()->with('danger', 'Gagal menambahkan data, pengeluaran lebih besar dari stok yang tersedia');
         } else {
-            return redirect()->back()->with('danger', 'Gagal menambahkan data');
+            $PartStok->save();
+            return redirect()->back()->with('success', 'Berhasil menambahkan data');
         }
     }
     public function update(Request $request, $id)
@@ -48,11 +51,14 @@ class PartStokController extends Controller
         $PartStok->id_part = $request->id_part;
         $PartStok->stok = $request->stok;
         $PartStok->type = $request->type;
-        if ($PartStok->save()) {
-
-            return redirect()->back()->with('success', 'Berhasil menambahkan data');
+        //check stok
+        $cekStok = PartStok::getStok($request->id_part);
+        // dd($cekStok);
+        if ($request->type == 0 && $request->stok > $cekStok) {
+            return redirect()->back()->with('danger', 'Gagal mengubah data, pengeluaran lebih besar dari stok yang tersedia');
         } else {
-            return redirect()->back()->with('danger', 'Gagal menambahkan data');
+            $PartStok->save();
+            return redirect()->back()->with('success', 'Berhasil mengubah data');
         }
     }
     public function destroy($id)

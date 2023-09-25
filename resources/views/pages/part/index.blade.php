@@ -69,7 +69,7 @@
                                                     Rp. {{ number_format($item->price) }}
                                                 </td>
                                                 <td>
-                                                    {!! $stok->count() != 0 ? 'Tersedia : ' . $stok->sum('stok') : '<span class="text-danger">Kosong</span>' !!}
+                                                    {!! $stok != 0 ? 'Tersedia : ' . $stok : '<span class="text-danger">Kosong</span>' !!}
                                                 </td>
                                                 <td width="200">
                                                     <button type="button" class="btn btn-light-warning btn-md"

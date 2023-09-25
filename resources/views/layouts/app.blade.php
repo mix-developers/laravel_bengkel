@@ -25,6 +25,37 @@
     <!-- Main Script -->
     <script src="{{ asset('frontend_theme/') }}/js/script.js"></script>
     @stack('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/sweetalert2@10">
+    @if (Session::has('danger'))
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ Session::get('danger') }}',
+                type: 'error',
+                icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        </script>
+    @endif
+
+    @if (Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Good job!',
+                text: '{{ Session::get('success') }}',
+                type: 'success',
+                icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        </script>
+    @endif
 </body>
 
 </html>

@@ -18,6 +18,10 @@ class ServiceStatus extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(Status::class, 'id_status', 'id');
+    }
     public static function getStatus($id_service)
     {
         return self::with('service')
@@ -29,5 +33,14 @@ class ServiceStatus extends Model
         return self::with('service')
             ->where('id_service', $id_service)
             ->orderBy('id', 'desc')->first();
+    }
+    public static function checkFinish($id_service)
+    {
+        return self::with('status')
+            ->where('id_service', $id_service)
+            ->whereHas('status', function ($query) {
+                $query->where('id_status', 6);
+            })
+            ->first();
     }
 }

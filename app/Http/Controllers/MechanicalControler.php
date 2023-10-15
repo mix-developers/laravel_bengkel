@@ -9,6 +9,7 @@ class MechanicalControler extends Controller
 {
     public function index()
     {
+        // $Mechanical = Mechanical::all();
         $data = [
             'title' => 'Data Mekanik',
             'Mechanical' => Mechanical::all(),

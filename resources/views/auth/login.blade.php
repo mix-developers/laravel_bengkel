@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card o-hidden border-0 shadow-lg my-5" style="border-radius: 20px;">
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -13,7 +13,7 @@
                                     <div class="text-center mb-4">
                                         <h1 class="h4 text-gray-900 ">{{ __('Login') }}</h1>
                                         <a href="{{ url('/') }}"
-                                            class="text-primary mb-4">{{ config('app.name', 'SIPETA') }}</a>
+                                            class="text-success mb-4">{{ config('app.name', 'SIPETA') }}</a>
                                     </div>
 
                                     @if ($errors->any())
@@ -50,13 +50,10 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            <button type="submit" class="btn btn-success btn-user btn-block">
                                                 {{ __('Login') }}
                                             </button>
                                         </div>
-
-                                        <hr>
-
                                         {{-- <div class="form-group">
                                         <button type="button" class="btn btn-github btn-user btn-block">
                                             <i class="fab fa-github fa-fw"></i> {{ __('Login with GitHub') }}

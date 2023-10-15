@@ -12,6 +12,18 @@
                 <form method="POST" action="{{ url('/part/update', $item->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    @if ($item->thumbnail != null || $item->thumbnail != '')
+                        <center>
+                            <img src="{{ Storage::url($item->thumbnail) }}" height="100px">
+                        </center>
+                    @endif
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="thumbnail">Foto Spare part</label>
+                            <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
+                                name="thumbnail">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"

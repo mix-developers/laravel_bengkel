@@ -19,7 +19,7 @@
                             <form method="POST" action="{{ url('/part/store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="thumbnail">Nama</label>
+                                    <label for="thumbnail">Foto Spare part</label>
                                     <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
                                         name="thumbnail">
                                 </div>
@@ -49,6 +49,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Foto</th>
                                             <th>Nama</th>
                                             <th>Harga</th>
                                             <th>Stok</th>
@@ -62,6 +63,10 @@
                                             @endphp
                                             <tr>
                                                 <td width="10">{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <img src="{{ $item->thumbnail != null || $item->thumbnail != '' ? Storage::url($item->thumbnail) : asset('img/favicon.png') }}"
+                                                        height="50px">
+                                                </td>
                                                 <td>
                                                     {{ $item->name }}
                                                 </td>

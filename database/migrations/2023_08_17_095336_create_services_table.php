@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_user');
             $table->text('description');
             $table->string('brand');
-            $table->string('thumbnail');
+            $table->string('thumbnail')->nullable();
             $table->string('accepted')->default(0);
             $table->timestamps();
 

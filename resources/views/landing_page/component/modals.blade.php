@@ -70,3 +70,97 @@
         </div>
     </div>
 </div>
+
+@if (Auth::check())
+    <div class="modal cart fade" id="cart" tabindex="-1" aria-labelledby="applyLoanLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h4 class="modal-title" id="exampleModalLabel">Keranjang anda</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-left">
+                    <table class="table table-borderless text-black">
+                        <tr>
+                            <td>#</td>
+                            <td>Spare Part</td>
+                            <td>Total Bayar</td>
+                            <td class="text-center"></td>
+                        </tr>
+
+                        @foreach (App\Models\OrderCart::where('id_user', Auth::user()->id)->get() as $item)
+                            <tr>
+                                <td style="width: 10px;">{{ $loop->iteration }}</td>
+                                <td>
+                                    <strong>{{ $item->part->name }}</strong><br>
+                                    Jumlah Pesanan : <span class="text-success">{{ $item->count }}</span> Pcs
+                                </td>
+                                <td><strong class="text-danger">Rp {{ number_format($item->total_price) }}</strong>
+                                </td>
+                                <td style="width: 200px;">
+                                    <div class="d-flex">
+
+                                        <a type="button" href="#" class="btn btn-warning p-2 mx-2"
+                                            data-bs-toggle="modal" data-bs-target="#chackout-{{ $item->id }}">
+                                            Checkout
+                                        </a>
+                                        <form action="{{ route('destroyCart', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm py-2">x</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @foreach (App\Models\OrderCart::where('id_user', Auth::user()->id)->get() as $item)
+        <div class="modal cart fade" id="chackout-{{ $item->id }}" tabindex="-1"
+            aria-labelledby="applyLoanLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h4 class="modal-title" id="exampleModalLabel">Checkout {{ $item->part->name }}</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('add_order') }}" enctype="multipart/form-data" method="POST">
+                        @csrf
+                        <div class="modal-body ">
+                            <input type="hidden" name="id_cart" value="{{ $item->id }}">
+                            <input type="hidden" name="id_part" value="{{ $item->id_part }}">
+                            <input type="hidden" name="total_price" value="{{ $item->total_price }}">
+                            <input type="hidden" name="count" value="{{ $item->count }}">
+                            <div class="form-group my-3">
+                                <label for="method">Apakah bagian dari service ? <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" id="inputGroupSelect04"
+                                    aria-label="Example select with button addon" name="is_service" required>
+                                    <option selected value="0">Tidak</option>
+                                    <option value="1">Bagian dari service</option>
+                                </select>
+                            </div>
+                            <div class="form-group my-3">
+                                <label for="method">Pilih Kode Service Anda </label>
+                                <select class="form-control" id="inputGroupSelect04"
+                                    aria-label="Example select with button addon" name="id_service">
+                                    <option selected value="">--pilih service-- </option>
+                                    @foreach (App\Models\Service::where('id_user', Auth::user()->id)->get() as $item)
+                                        <option value="{{ $item->id }}">{{ $item->code }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-warning">Checkout sekarang</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+@endif

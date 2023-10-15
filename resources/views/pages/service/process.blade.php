@@ -34,7 +34,7 @@
                                             <tr>
                                                 <td width="10">{{ $loop->iteration }}</td>
                                                 <td>
-                                                    @if ($item->user->role != 'member')
+                                                    @if ($item->user->role != 'customer')
                                                         {{ App\Models\ServiceOut::getIdentity($item->code)->name }} <br>
                                                         <span class="badge badge-light-danger">(Non Member)</span>
                                                     @else
@@ -53,10 +53,14 @@
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-primary">
-                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status }}
+                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status->status }}
                                                     </span>
                                                 </td>
                                                 <td>
+                                                    <a href="{{ route('service.invoice', $item->id) }}" target="__blank"
+                                                        class="btn btn-light-warning btn-md "><i
+                                                            class="feather icon-file  f-16 "></i> Invoice
+                                                    </a>
                                                     <a href="{{ route('service.show', $item->id) }}"
                                                         class="btn btn-light-primary btn-md "><i
                                                             class="feather icon-eye  f-16 "></i> Lihat

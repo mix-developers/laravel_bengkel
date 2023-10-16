@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notifikasi;
 use App\Models\Order;
 use App\Models\OrderCart;
 use App\Models\Part;
@@ -11,6 +12,7 @@ use App\Models\ServiceOut;
 use App\Models\ServicePart;
 use App\Models\ServicePrice;
 use App\Models\ServiceStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -144,12 +146,12 @@ class frontController extends Controller
         try {
             $order = new Order();
             $order->is_service = $request->is_service;
-            $order->id_service = $request->id_service;
             $order->id_part = $request->id_part;
             $order->count = $request->count;
             $order->total_price = $request->total_price;
             $order->id_user = Auth::user()->id;
             $order->save();
+
             if ($request->is_service == 1) {
                 $ServiceStatus = new ServiceStatus();
                 $ServiceStatus->id_user = Auth::user()->id;
@@ -158,6 +160,15 @@ class frontController extends Controller
                 $ServiceStatus->foto = '';
                 $ServiceStatus->description = 'Penambahan sparepart oleh customer';
                 $ServiceStatus->save();
+                //create notifikasi
+                $service = Service::find($request->id_service);
+
+                $notifikasi = new Notifikasi();
+                $notifikasi->type = 'warning';
+                $notifikasi->url = '/service/process';
+                $notifikasi->id_user = $service->id_user;
+                $notifikasi->content = 'Customer menambahkan spare part pada  service : ' . $service->code;
+                $notifikasi->save();
 
                 $ServicePart = new ServicePart();
                 $ServicePart->id_service = $request->id_service;
@@ -165,6 +176,18 @@ class frontController extends Controller
                 $ServicePart->save();
                 return redirect()->back()->with('success', 'Berhasil menambahkan sparepart');
             } else {
+
+                //create notifikasi
+                $part = Part::find($request->id_part);
+                foreach (User::where('role', 'admin')->get() as $item) {
+                    $notifikasi = new Notifikasi();
+                    $notifikasi->type = 'warning';
+                    $notifikasi->url = '/order';
+                    $notifikasi->id_user = $item->id;
+                    $notifikasi->content = Auth::user()->name . ' melakukan order pada ' . $part->name;
+                    $notifikasi->save();
+                }
+
                 return redirect()->back()->with('success', 'Berhasil Membuat order');
             }
 

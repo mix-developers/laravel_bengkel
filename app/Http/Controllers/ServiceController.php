@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mechanical;
+use App\Models\Notifikasi;
 use App\Models\Part;
 use App\Models\Service;
 use App\Models\ServiceMechanic;
@@ -48,36 +49,7 @@ class ServiceController extends Controller
         ];
         return view('pages.service.payment', $data);
     }
-    // public function show($id)
-    // {
-    //     $service = Service::find($id);
-    //     $price = ServicePrice::where('id_service', $id)->get();
-    //     $biaya_jasa = $price->sum('price');
 
-    //     $total_part = ServicePart::select('id')
-    //         ->where('id_service', $service->id)
-    //         ->groupBy('id') // Add the GROUP BY clause
-    //         ->withSum('part', 'price')
-    //         ->get()
-    //         ->toArray();
-    //     $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
-    //     $biaya_total = $biaya_jasa + $biaya_part;
-    //     $data = [
-    //         'title' => 'Status Service',
-    //         'service' => $service,
-    //         'service_status' => ServiceStatus::where('id_service', $id)->get(),
-    //         'mechanical' => Mechanical::all(),
-    //         'part' => Part::all(),
-    //         'mechanical_service' => ServiceMechanic::where('id_service', $id)->get(),
-    //         'part_service' => ServicePart::where('id_service', $id)->get(),
-    //         'price' => $price,
-    //         'biaya_jasa' => $biaya_jasa,
-    //         'biaya_part' => $biaya_part,
-    //         'biaya_total' => $biaya_total,
-    //         'statuses' => Status::all(),
-    //     ];
-    //     return view('pages.service.show', $data);
-    // }
     public function show($id)
     {
         $service = Service::find($id);
@@ -122,6 +94,17 @@ class ServiceController extends Controller
         $payment = ServicePayment::find($id);
         $payment->is_verified = 1;
         $payment->save();
+
+        //create notifikasi
+        $service = Service::find($payment->id_service);
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->type = 'success';
+        $notifikasi->url = '/service/member';
+        $notifikasi->id_user = $service->id_user;
+        $notifikasi->content = 'Admin telah mengkonfirmasi pembayaran pada kode service ' . $service->code;
+        $notifikasi->save();
+
         return redirect()->back()->with('success', 'Pembayaran berhasil di konfirmasi');
     }
     public function verified_reject($id)
@@ -129,6 +112,16 @@ class ServiceController extends Controller
         $payment = ServicePayment::find($id);
         $payment->is_verified = 2;
         $payment->save();
+
+        //create notifikasi
+        $service = Service::find($payment->id_service);
+
+        $notifikasi = new Notifikasi();
+        $notifikasi->type = 'danger';
+        $notifikasi->url = '/service/member';
+        $notifikasi->id_user = $service->id_user;
+        $notifikasi->content = 'Admin telah menolak pembayaran pada kode service ' . $service->code;
+        $notifikasi->save();
         return redirect()->back()->with('success', 'Pembayaran berhasil di ditolak');
     }
     public function accept(Request $request, $id)
@@ -155,6 +148,16 @@ class ServiceController extends Controller
             $service->save();
             $ServiceStatus->id_service = $service->id;
             // dd('gagal');
+
+            //create notifikasi
+            $service = Service::find($service->id);
+
+            $notifikasi = new Notifikasi();
+            $notifikasi->type = 'success';
+            $notifikasi->url = '/service/member';
+            $notifikasi->id_user = $service->id_user;
+            $notifikasi->content = 'Admin menerima pengajuan service anda dengan kode service : ' . $service->code;
+            $notifikasi->save();
         }
 
         $ServiceStatus->id_user = Auth::user()->id;
@@ -198,6 +201,16 @@ class ServiceController extends Controller
             }
             $payment->thumbnail = isset($file_path) ? $file_path : null;
             $payment->save();
+
+            //create notifikasi
+            $service = Service::find($request->id_service);
+
+            $notifikasi = new Notifikasi();
+            $notifikasi->type = 'success';
+            $notifikasi->url = '/service/member';
+            $notifikasi->id_user = $service->id_user;
+            $notifikasi->content = 'Admin menerima pembayaran anda dengan kode service : ' . $service->code;
+            $notifikasi->save();
         }
         if ($ServiceStatus->save()) {
             return redirect()->back()->with('success', 'Berhasil menerima status');

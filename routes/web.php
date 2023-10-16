@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\frontController;
 use App\Http\Controllers\MechanicalControler;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PartStokController;
@@ -36,6 +37,9 @@ Route::post('/add_order', [frontController::class, 'add_order'])->name('add_orde
 
 Auth::routes(['verify' => true]);
 Route::middleware('verified')->group(function () {
+    //notifikasi
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi');
+    Route::put('/notifikasi/read/{id}', [NotifikasiController::class, 'read'])->name('notifikasi.read');
     //dashboard
     Route::get('/home', 'HomeController@index')->name('home');
     Route::middleware(['role:admin'])->group(function () {
@@ -83,7 +87,11 @@ Route::middleware('verified')->group(function () {
     Route::middleware(['role:admin,owner'])->group(function () {
         //laporan
         Route::get('/report/part', [RerportController::class, 'part'])->name('report.part');
+        Route::get('/report/cetak_part', [RerportController::class, 'cetak_part'])->name('report.cetak_part');
+        Route::get('/report/cetak_services', [RerportController::class, 'cetak_services'])->name('report.cetak_services');
         Route::get('/report/service', [RerportController::class, 'services'])->name('report.service');
+        Route::get('/report/cetak_pengeluaran', [RerportController::class, 'cetak_pengeluaran'])->name('report.cetak_pengeluaran');
+        Route::get('/report/pengeluaran', [RerportController::class, 'pengeluaran'])->name('report.pengeluaran');
     });
     Route::middleware(['role:admin,customer'])->group(function () {
 

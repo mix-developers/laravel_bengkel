@@ -10,13 +10,19 @@
             <!-- [ Main Content ] start -->
             <div class="row">
                 <!-- subscribe start -->
-
+                <div class="col-12 mb-4">
+                    <a href="{{ route('report.cetak_part') }}" target="__blank" class="btn btn-primary">
+                        <i class="fa fa-print"></i> Cetak Laporan
+                    </a>
+                </div>
                 <div class="col-12">
+
                     <div class="card">
                         <div class="card-header">
                             <h5>{{ $title }} </h5>
                         </div>
                         <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped mb-0 lara-dataTable">
                                     <thead>
@@ -41,7 +47,8 @@
                                                     Rp. {{ number_format($item->price) }}
                                                 </td>
                                                 <td>
-                                                    {!! $stok->count() != 0 ? 'Tersedia : ' . $stok->sum('stok') : '<span class="text-danger">Kosong</span>' !!}
+                                                    {!! $stok > 0 ? 'Tersedia : ' . $stok : '<span class="text-danger">Kosong</span>' !!}
+
                                                 </td>
 
                                             </tr>

@@ -35,7 +35,8 @@
                                                 <td width="10">{{ $loop->iteration }}</td>
                                                 <td>
                                                     @if ($item->user->role != 'customer')
-                                                        {{ App\Models\ServiceOut::getIdentity($item->code)->name }} <br>
+                                                        {{ App\Models\ServiceOut::getIdentity($item->code)->name ?? '-' }}
+                                                        <br>
                                                         <span class="badge badge-light-danger">(Non Member)</span>
                                                     @else
                                                         {{ $item->user->name }}<br>
@@ -53,7 +54,7 @@
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-primary">
-                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status->status }}
+                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status->status ?? '-' }}
                                                     </span>
                                                 </td>
                                                 <td>

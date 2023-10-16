@@ -72,6 +72,9 @@
         <li class="pc-item"><a href="{{ url('/report/part') }}" class="pc-link "><span class="pc-micon"><i
                         data-feather="file-text"></i></span><span class="pc-mtext">Laporan Stok</span></a>
         </li>
+        <li class="pc-item"><a href="{{ url('/report/pengeluaran') }}" class="pc-link "><span class="pc-micon"><i
+                        data-feather="file-text"></i></span><span class="pc-mtext">Laporan Pengeluaran</span></a>
+        </li>
     @endif
     @if (Auth::user()->role == 'customer')
         <li class="pc-item pc-caption">

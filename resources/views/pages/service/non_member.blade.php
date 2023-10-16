@@ -1,8 +1,6 @@
 @extends('layouts.backend.admin')
-
 @section('content')
     <section class="pc-container">
-
         <div class="pcoded-content">
             <!-- [ breadcrumb ] start -->
             @include('layouts.backend.title')
@@ -10,7 +8,6 @@
             <!-- [ Main Content ] start -->
             <div class="row">
                 <!-- subscribe start -->
-
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">

@@ -53,6 +53,7 @@
                                                             class="d-inline-block">
                                                             @csrf
                                                             @method('PUT')
+                                                            <input type="hidden" name="jenis" value="non-member">
                                                             <button type="submit" class="btn btn-light-primary btn-md "><i
                                                                     class="feather icon-chack  f-16 "></i> Terima
                                                             </button>

@@ -100,10 +100,10 @@ class ServiceController extends Controller
         $payment->save();
         return redirect()->back()->with('success', 'Pembayaran berhasil di ditolak');
     }
-    public function accept($id)
+    public function accept(Request $request, $id)
     {
         $ServiceStatus = new ServiceStatus();
-        if (Service::find($id) == null) {
+        if ($request->jenis == 'non-member') {
 
             $Service = new Service();
             $ServiceOut = ServiceOut::find($id);
@@ -117,11 +117,13 @@ class ServiceController extends Controller
             $Service->save();
             $ServiceStatus->service()->associate($Service);
             $ServiceOut->save();
+            // dd('berhasil');
         } else {
             $service = Service::find($id);
             $service->accepted = 1;
             $service->save();
             $ServiceStatus->id_service = $service->id;
+            // dd('gagal');
         }
 
         $ServiceStatus->id_user = Auth::user()->id;

@@ -47,7 +47,7 @@
                     <div class="row d-flex justify-content-center">
                         @if (App\Models\ReviewRating::where('star_rating', '>=', 3)->limit(4)->latest()->count() != 0)
                             @foreach (App\Models\ReviewRating::where('star_rating', '>=', 3)->limit(4)->latest()->get() as $item)
-                                <div class="col-3">
+                                <div class="col-lg-3">
                                     <div class="card border border-success">
                                         <div class="card-body">
                                             @for ($i = 1; $i <= $item->star_rating; $i++)
@@ -103,27 +103,16 @@
                                     style="height: 150px" class="my-3">
                                 <h2 class="text-danger">Rp {{ number_format($item->price) }}</h2>
                             </div>
-                            <div class="card-footer bg-white">
-                                <form action="{{ route('add_cart') }}" enctype="multipart/form-data" method="POST">
-                                    @csrf
+                            @guest
+                            @else
+                                <div class="card-footer bg-white">
                                     <div class="form-inline d-flex justify-content-center">
-                                        <input type="hidden" name="id_part" value="{{ $item->id }}">
-                                        <input type="number" class="form-control mx-2" style="width: 70px;" name="count"
-                                            value="1">
-                                        <button type="submit" href="" class="btn btn-sm btn-success">Tambah
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                <style>
-                                                    svg {
-                                                        fill: #ffffff
-                                                    }
-                                                </style>
-                                                <path
-                                                    d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
-                                            </svg>
-                                        </button>
+                                        <a href="{{ route('register') }}" class="btn btn-sm btn-success">Daftar
+                                        </a>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            @endguest
+
                         </div>
                     </div>
                 @endforeach

@@ -48,20 +48,49 @@ class ServiceController extends Controller
         ];
         return view('pages.service.payment', $data);
     }
+    // public function show($id)
+    // {
+    //     $service = Service::find($id);
+    //     $price = ServicePrice::where('id_service', $id)->get();
+    //     $biaya_jasa = $price->sum('price');
+
+    //     $total_part = ServicePart::select('id')
+    //         ->where('id_service', $service->id)
+    //         ->groupBy('id') // Add the GROUP BY clause
+    //         ->withSum('part', 'price')
+    //         ->get()
+    //         ->toArray();
+    //     $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
+    //     $biaya_total = $biaya_jasa + $biaya_part;
+    //     $data = [
+    //         'title' => 'Status Service',
+    //         'service' => $service,
+    //         'service_status' => ServiceStatus::where('id_service', $id)->get(),
+    //         'mechanical' => Mechanical::all(),
+    //         'part' => Part::all(),
+    //         'mechanical_service' => ServiceMechanic::where('id_service', $id)->get(),
+    //         'part_service' => ServicePart::where('id_service', $id)->get(),
+    //         'price' => $price,
+    //         'biaya_jasa' => $biaya_jasa,
+    //         'biaya_part' => $biaya_part,
+    //         'biaya_total' => $biaya_total,
+    //         'statuses' => Status::all(),
+    //     ];
+    //     return view('pages.service.show', $data);
+    // }
     public function show($id)
     {
         $service = Service::find($id);
         $price = ServicePrice::where('id_service', $id)->get();
         $biaya_jasa = $price->sum('price');
 
-        $total_part = ServicePart::select('id')
-            ->where('id_service', $service->id)
-            ->groupBy('id') // Add the GROUP BY clause
+        $total_part = ServicePart::where('id_service', $service->id)
             ->withSum('part', 'price')
-            ->get()
-            ->toArray();
-        $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
+            ->get();
+
+        $biaya_part = $total_part->sum('part_sum_price');
         $biaya_total = $biaya_jasa + $biaya_part;
+
         $data = [
             'title' => 'Status Service',
             'service' => $service,
@@ -76,8 +105,10 @@ class ServiceController extends Controller
             'biaya_total' => $biaya_total,
             'statuses' => Status::all(),
         ];
+
         return view('pages.service.show', $data);
     }
+
     public function process()
     {
         $data = [

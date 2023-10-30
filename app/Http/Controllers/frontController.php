@@ -15,6 +15,7 @@ use App\Models\ServiceStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class frontController extends Controller
 {
@@ -93,12 +94,19 @@ class frontController extends Controller
         $price = ServicePrice::where('id_service', $service->id)->get();
         $biaya_jasa = $price->sum('price');
 
-        $total_part = ServicePart::select('id')
+        // $total_part = ServicePart::select('id')
+        //     ->where('id_service', $service->id)
+        //     ->groupBy('id') // Add the GROUP BY clause
+        //     ->withSum('part', 'price')
+        //     ->get()
+        //     ->toArray();
+        $total_part = ServicePart::select('id', DB::raw('SUM(id_part) as total_id_part'))
             ->where('id_service', $service->id)
-            ->groupBy('id') // Add the GROUP BY clause
+            ->groupBy('id')
             ->withSum('part', 'price')
             ->get()
             ->toArray();
+
         $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
         $biaya_total = $biaya_jasa + $biaya_part;
 

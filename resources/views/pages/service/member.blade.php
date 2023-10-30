@@ -51,7 +51,7 @@
                                                         {!! $item->description !!}
                                                     </td>
                                                     <td>
-                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status->status }}
+                                                        {{ App\Models\ServiceStatus::getLastStatus($item->id)->status->status ?? '-' }}
                                                         @if (App\Models\ServiceStatus::checkFinish($item->id) != null)
                                                             @if (App\Models\ServiceFinished::where('id_service', $item->id)->count() <= 0)
                                                                 <hr class="my-0">
@@ -69,6 +69,8 @@
                                                                     </div>
                                                                 @endforeach
                                                             @endif
+                                                        @else
+                                                            -
                                                         @endif
                                                     </td>
                                                     <td>

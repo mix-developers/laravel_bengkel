@@ -57,7 +57,7 @@ class frontController extends Controller
         $service->code = 'BIJ' . $milliseconds;
         if ($service->save()) {
 
-            return redirect()->back()->with('success', 'Berhasil mengajukan service');
+            return redirect()->back()->with('success', 'Berhasil mengajukan service dengan code :' . $service->code);
         } else {
             return redirect()->back()->with('danger', 'Gagal mengajukan service');
         }
@@ -78,7 +78,7 @@ class frontController extends Controller
         $service->code = 'BIJ' . $milliseconds;
         if ($service->save()) {
 
-            return redirect()->back()->with('success', 'Berhasil mengajukan service');
+            return redirect()->back()->with('success', 'Berhasil mengajukan service dengan code :' . $service->code);
         } else {
             return redirect()->back()->with('danger', 'Gagal mengajukan service');
         }

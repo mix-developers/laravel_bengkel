@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -26,14 +27,14 @@ class ServiceController extends Controller
     {
         $data = [
             'title' => 'data service non member',
-            'service' => ServiceOut::where('accepted', 0)->get(),
+            'service' => ServiceOut::where('accepted', 0)->latest()->get(),
         ];
         return view('pages.service.non_member', $data);
     }
     public function member()
     {
-        $customer =  Service::where('id_user', Auth::user()->id)->get();
-        $admin =  Service::where('accepted', 0)->get();
+        $customer =  Service::where('id_user', Auth::user()->id)->latest()->get();
+        $admin =  Service::where('accepted', 0)->latest()->get();
         $data = [
             'title' => 'data service member',
             'service' => Auth::user()->role == 'customer' ? $customer : $admin,
@@ -85,7 +86,7 @@ class ServiceController extends Controller
     {
         $data = [
             'title' => 'data Proses service',
-            'service' => Service::where('accepted', 1)->get(),
+            'service' => Service::where('accepted', 1)->latest()->get(),
         ];
         return view('pages.service.process', $data);
     }

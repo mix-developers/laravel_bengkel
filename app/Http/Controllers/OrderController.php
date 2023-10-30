@@ -11,9 +11,9 @@ class OrderController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'customer') {
-            $order = Order::where('id_user', Auth::user()->id)->get();
+            $order = Order::where('id_user', Auth::user()->id)->latest()->get();
         } else {
-            $order = Order::all();
+            $order = Order::latest()->get();
         }
         $data = [
             'title' => 'Data Order',

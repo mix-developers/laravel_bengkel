@@ -296,19 +296,14 @@ class ServiceController extends Controller
         $price = ServicePrice::where('id_service', $id)->get();
         $biaya_jasa = $price->sum('price');
 
-        // $total_part = ServicePart::select('id')
-        //     ->where('id_service', $data->id)
-        //     ->groupBy('id') // Add the GROUP BY clause
-        //     ->withSum('part', 'price')
-        //     ->get()
-        //     ->toArray();
-
-        $total_part = ServicePart::select('id', DB::raw('SUM(id_part) as total_id_part'))
+        $total_part = ServicePart::select('id')
             ->where('id_service', $data->id)
-            ->groupBy('id')
+            ->groupBy('id') // Add the GROUP BY clause
             ->withSum('part', 'price')
             ->get()
             ->toArray();
+
+
         $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
         $biaya_total = $biaya_jasa + $biaya_part;
 

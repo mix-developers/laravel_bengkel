@@ -23,7 +23,7 @@
                 @php
                     $status = App\Models\ServiceStatus::getLastStatus($service->id);
                 @endphp
-                <div class="row justifi-content-center">
+                <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="table-responsive">
                             <table class="table table-bordered  text-black " style="font-size:14px;">

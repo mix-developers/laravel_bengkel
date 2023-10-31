@@ -24,7 +24,7 @@
                     $status = App\Models\ServiceStatus::getLastStatus($service->id);
                 @endphp
                 <div class="table-responsive">
-                    <table class="table table-bordered  text-black">
+                    <table class="table table-bordered  text-black " style="font-size:14px;">
                         <thead>
                             <tr>
                                 <th colspan='2' style="text-align:center;"><strong>Invoice</strong></th>

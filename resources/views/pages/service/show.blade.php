@@ -25,14 +25,14 @@
                                                 <td>
                                                     {!! $service->user->role == 'customer'
                                                         ? $service->user->name
-                                                        : App\Models\ServiceOut::getIdentity($service->code)->name ?? '-' .
-                                                            ' <span class="badge badge-light-danger"> (Non-member)</span>' !!}
+                                                        : App\Models\ServiceOut::getIdentity($service->code)->name ??
+                                                            '-' . ' <span class="badge badge-light-danger"> (Non-member)</span>' !!}
                                                     <br>
                                                     @if ($service->user->role == 'customer')
                                                         <small class="text-muted">{{ $service->user->phone }}</small>
                                                     @else
                                                         <small
-                                                            class="text-muted">{{ App\Models\ServiceOut::getIdentity($service->code)->phone }}</small>
+                                                            class="text-muted">{{ App\Models\ServiceOut::getIdentity($service->code)->phone ?? '-' }}</small>
                                                     @endif
                                                 </td>
                                             @else
@@ -49,7 +49,7 @@
                                             <td>Alamat</td>
                                             <td>
                                                 @if (Auth::user()->role != 'customer')
-                                                    {{ $service->user->role == 'customer' ? $service->user->address : App\Models\ServiceOut::getIdentity($service->code)->address }}
+                                                    {{ $service->user->role == 'customer' ? $service->user->address : App\Models\ServiceOut::getIdentity($service->code)->address ?? '-' }}
                                                 @else
                                                     {{ Auth::user()->address }}
                                                 @endif

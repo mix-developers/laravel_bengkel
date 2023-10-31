@@ -43,7 +43,7 @@
                                         <td>Nama</td>
                                         <td>
                                             @if ($service->user->role != 'customer')
-                                                <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name }}</strong><br>
+                                                <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name ?? 'Tanpa Nama' }}</strong><br>
                                                 <small>Non-member</small>
                                             @else
                                                 <strong>{{ $service->user->name }}</strong><br>

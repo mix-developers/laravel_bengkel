@@ -18,25 +18,25 @@
                             <div class="col-lg-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="name" class="form-label">Nama Lengkap</label>
-                                    <input type="text" name="name" class="form-control shadow-none">
+                                    <input type="text" name="name" class="form-control shadow-none" required>
                                 </div>
                             </div>
                             <div class="col-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="description" class="form-label">Keterangan Kerusakan</label>
-                                    <textarea name="description" class="form-control"></textarea>
+                                    <textarea name="description" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="address" class="form-label">Lokasi Kendaraan</label>
-                                    <input type="text" class="form-control shadow-none" name="address">
+                                    <input type="text" class="form-control shadow-none" name="address" required>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Nomor HP</label>
-                                    <input type="text" name="phone" class="form-control shadow-none">
+                                    <input type="text" name="phone" class="form-control shadow-none" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -51,13 +51,13 @@
                             <div class="col-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="description" class="form-label">Keterangan Kerusakan</label>
-                                    <textarea name="description" class="form-control"></textarea>
+                                    <textarea name="description" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12 mb-4 ">
                                 <div class="form-group">
                                     <label for="brand" class="form-label">Merek Motor</label>
-                                    <input type="text" class="form-control shadow-none" name="brand">
+                                    <input type="text" class="form-control shadow-none" name="brand" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">

@@ -19,66 +19,72 @@
                 </div>
             </div>
 
-            <div class="container" style="width: 500px;">
+            <div class="container">
                 @php
                     $status = App\Models\ServiceStatus::getLastStatus($service->id);
                 @endphp
-                <div class="table-responsive">
-                    <table class="table table-bordered  text-black " style="font-size:14px;">
-                        <thead>
-                            <tr>
-                                <th colspan='2' style="text-align:center;"><strong>Invoice</strong></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Kode Service</td>
-                                <td>
-                                    <strong>{{ $service->code }}</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Nama</td>
-                                <td>
-                                    @if ($service->user->role != 'customer')
-                                        <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name }}</strong><br>
-                                        <small>Non-member</small>
-                                    @else
-                                        <strong>{{ $service->user->name }}</strong><br>
-                                        <small>Member</small>
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Total Bayar</td>
-                                <td><strong>Rp {{ number_format($total_biaya) }}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Tanggal Service</td>
-                                <td>{{ $service->created_at->format('d F Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td>Status Service</td>
-                                <td>{!! $status != null ? $status->status->status : '<span class="text-danger">Masih dalam antrian</span>' !!}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row justifi-content-center">
+                    <div class="col-lg-6">
+                        <div class="table-responsive">
+                            <table class="table table-bordered  text-black " style="font-size:14px;">
+                                <thead>
+                                    <tr>
+                                        <th colspan='2' style="text-align:center;"><strong>Invoice</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Kode Service</td>
+                                        <td>
+                                            <strong>{{ $service->code }}</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td>
+                                            @if ($service->user->role != 'customer')
+                                                <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name }}</strong><br>
+                                                <small>Non-member</small>
+                                            @else
+                                                <strong>{{ $service->user->name }}</strong><br>
+                                                <small>Member</small>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Bayar</td>
+                                        <td><strong>Rp {{ number_format($total_biaya) }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal Service</td>
+                                        <td>{{ $service->created_at->format('d F Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status Service</td>
+                                        <td>{!! $status != null ? $status->status->status : '<span class="text-danger">Masih dalam antrian</span>' !!}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <center class="text-black">Pembayaran : </center>
+                            <table class="table text-black">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Cash</td>
+                                </tr>
+                                @foreach (App\Models\Bank::all() as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration + 1 }}</td>
+                                        <td><strong>{{ $item->no_rekening }}</strong><br>{{ $item->bank . ' - ' . $item->nama_pemilik }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <center class="text-black">Pembayaran : </center>
-                <table class="table text-black">
-                    <tr>
-                        <td>1</td>
-                        <td>Cash</td>
-                    </tr>
-                    @foreach (App\Models\Bank::all() as $item)
-                        <tr>
-                            <td>{{ $loop->iteration + 1 }}</td>
-                            <td><strong>{{ $item->no_rekening }}</strong><br>{{ $item->bank . ' - ' . $item->nama_pemilik }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+
+
 
                 </body>
             </div>

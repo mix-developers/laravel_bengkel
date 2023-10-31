@@ -25,7 +25,7 @@
                                                 <td>
                                                     {!! $service->user->role == 'customer'
                                                         ? $service->user->name
-                                                        : App\Models\ServiceOut::getIdentity($service->code)->name .
+                                                        : App\Models\ServiceOut::getIdentity($service->code)->name ?? '-' .
                                                             ' <span class="badge badge-light-danger"> (Non-member)</span>' !!}
                                                     <br>
                                                     @if ($service->user->role == 'customer')

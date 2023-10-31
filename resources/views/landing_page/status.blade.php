@@ -23,46 +23,47 @@
                 @php
                     $status = App\Models\ServiceStatus::getLastStatus($service->id);
                 @endphp
-
-                <table class="table table-bordered  text-black">
-                    <thead>
-                        <tr>
-                            <th colspan='2' style="text-align:center;"><strong>Invoice</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Kode Service</td>
-                            <td>
-                                <strong>{{ $service->code }}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nama</td>
-                            <td>
-                                @if ($service->user->role != 'customer')
-                                    <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name }}</strong><br>
-                                    <small>Non-member</small>
-                                @else
-                                    <strong>{{ $service->user->name }}</strong><br>
-                                    <small>Member</small>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Total Bayar</td>
-                            <td><strong>Rp {{ number_format($total_biaya) }}</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Tanggal Service</td>
-                            <td>{{ $service->created_at->format('d F Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Status Service</td>
-                            <td>{!! $status != null ? $status->status->status : '<span class="text-danger">Masih dalam antrian</span>' !!}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered  text-black">
+                        <thead>
+                            <tr>
+                                <th colspan='2' style="text-align:center;"><strong>Invoice</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Kode Service</td>
+                                <td>
+                                    <strong>{{ $service->code }}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nama</td>
+                                <td>
+                                    @if ($service->user->role != 'customer')
+                                        <strong>{{ App\Models\ServiceOut::getIdentity($service->code)->name }}</strong><br>
+                                        <small>Non-member</small>
+                                    @else
+                                        <strong>{{ $service->user->name }}</strong><br>
+                                        <small>Member</small>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total Bayar</td>
+                                <td><strong>Rp {{ number_format($total_biaya) }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Service</td>
+                                <td>{{ $service->created_at->format('d F Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Status Service</td>
+                                <td>{!! $status != null ? $status->status->status : '<span class="text-danger">Masih dalam antrian</span>' !!}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <hr>
                 <center class="text-black">Pembayaran : </center>
                 <table class="table text-black">

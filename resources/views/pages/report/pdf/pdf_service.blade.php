@@ -75,7 +75,7 @@
                             <td width="10">{{ $loop->iteration }}</td>
                             <td>
                                 @if ($item->user->role != 'customer')
-                                    {{ App\Models\ServiceOut::getIdentity($item->code)->name }} <br>
+                                    {{ App\Models\ServiceOut::getIdentity($item->code)->name ?? 'Tanpa Nama' }} <br>
                                     <small class="text-danger">(Non Member)</small>
                                 @else
                                     {{ $item->user->name }}<br>

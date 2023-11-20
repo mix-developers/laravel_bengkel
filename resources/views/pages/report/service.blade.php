@@ -58,7 +58,8 @@
                                                 <td width="10">{{ $loop->iteration }}</td>
                                                 <td>
                                                     @if ($item->user->role != 'customer')
-                                                        {{ App\Models\ServiceOut::getIdentity($item->code)->name }} <br>
+                                                        {{ App\Models\ServiceOut::getIdentity($item->code)->name ?? 'Tanpa Nama' }}
+                                                        <br>
                                                         <span class="badge badge-light-danger">(Non Member)</span>
                                                     @else
                                                         {{ $item->user->name }}<br>
@@ -96,6 +97,8 @@
                                                         @elseif($bayar->is_verified == 2)
                                                             <span class="badge badge-light-danger">Pembayaran
                                                                 Ditolak</span>
+                                                        @else
+                                                            -
                                                         @endif
                                                     @endif
                                                 </td>

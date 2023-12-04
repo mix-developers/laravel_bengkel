@@ -13,7 +13,7 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Tambah Mekanik</h5>
+                            <h5>Tambah Bank</h5>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ url('/bank/store') }}" enctype="multipart/form-data">

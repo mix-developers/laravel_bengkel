@@ -51,8 +51,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Nama</th>
-                                            <th>Harga</th>
-                                            <th>Stok</th>
+                                            <th>Nomor HP</th>
+                                            <th>Alamat</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>

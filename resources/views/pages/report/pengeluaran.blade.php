@@ -46,8 +46,8 @@
                                             <th>#</th>
                                             <th>Tanggal</th>
                                             <th>Spare Part</th>
-                                            <th>Jumlah</th>
-                                            <th>Total Harga</th>
+                                            <th>Kode Service</th>
+                                            <th>Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,7 +61,7 @@
                                                     {{ $item->part->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->stok }}
+                                                    {{ $item->service->code }}
                                                 </td>
                                                 <td>
                                                     Rp {{ number_format($item->part->price) }}

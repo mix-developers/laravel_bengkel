@@ -60,7 +60,7 @@ class RerportController extends Controller
     public function pengeluaran()
     {
         $data = [
-            'title' => 'Laporan Service',
+            'title' => 'Laporan Pengeluaran',
             'stok' => ServicePart::latest()->get(),
         ];
         return view('pages.report.pengeluaran', $data);

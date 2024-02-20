@@ -61,6 +61,7 @@
                 <thead>
                     <tr>
                         <th style="width: 15px;">#</th>
+                        <th>Tanggal</th>
                         <th>Nama</th>
                         <th>Keterangan</th>
                         <th>Alamat</th>
@@ -73,6 +74,7 @@
                     @foreach ($data as $item)
                         <tr>
                             <td width="10">{{ $loop->iteration }}</td>
+                            <td> {{ $item->created_at->format('d/m/Y') }}</td>
                             <td>
                                 @if ($item->user->role != 'customer')
                                     {{ App\Models\ServiceOut::getIdentity($item->code)->name ?? 'Tanpa Nama' }} <br>

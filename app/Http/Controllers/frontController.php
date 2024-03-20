@@ -154,6 +154,7 @@ class frontController extends Controller
             $order->total_price = $request->total_price;
             $order->id_user = Auth::user()->id;
             $order->save();
+            $message = '';
 
             if ($request->is_service == 1) {
                 $ServiceStatus = new ServiceStatus();
@@ -177,7 +178,8 @@ class frontController extends Controller
                 $ServicePart->id_service = $request->id_service;
                 $ServicePart->id_part = $request->id_part;
                 $ServicePart->save();
-                return redirect()->back()->with('success', 'Berhasil menambahkan sparepart');
+
+                $message = 'Berhasil menambahkan sparepart';
             } else {
 
                 //create notifikasi
@@ -190,8 +192,7 @@ class frontController extends Controller
                     $notifikasi->content = Auth::user()->name . ' melakukan order pada ' . $part->name;
                     $notifikasi->save();
                 }
-
-                return redirect()->back()->with('success', 'Berhasil Membuat order');
+                $message = 'Berhasil Membuat order';
             }
 
             $PartStok = new PartStok();
@@ -207,6 +208,7 @@ class frontController extends Controller
 
             $cart = OrderCart::where('id', $request->id_cart)->first();
             $cart->delete();
+            return redirect()->back()->with('success', $message);
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Terjadi kesalahan : ' . $e->getMessage());
         }

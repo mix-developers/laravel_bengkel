@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mechanical;
 use App\Models\Notifikasi;
 use App\Models\Part;
+use App\Models\PartStok;
 use App\Models\Service;
 use App\Models\ServiceMechanic;
 use App\Models\ServiceOut;
@@ -240,7 +241,15 @@ class ServiceController extends Controller
         $ServicePart = new ServicePart();
         $ServicePart->id_service = $request->id_service;
         $ServicePart->id_part = $request->id_part;
-        $ServicePart->save();
+
+        //pengurangan stok
+        $stok = new PartStok();
+        $stok->id_part = $request->id_part;
+        $stok->stok = 1;
+        $stok->type = 0;
+        if ($stok->save()) {
+            $ServicePart->save();
+        }
         return redirect()->back()->with('success', 'Berhasil menambah part');
     }
     public function storePrice(Request $request)
@@ -270,6 +279,12 @@ class ServiceController extends Controller
     public function destroyPart($id)
     {
         $ServicePart = ServicePart::find($id);
+        //pengurangan stok
+        $stok = new PartStok();
+        $stok->id_part = $ServicePart->id_part;
+        $stok->stok = 1;
+        $stok->type = 1;
+        $stok->save();
         $ServicePart->delete();
         return redirect()->back()->with('success', 'Berhasil Menghapus part');
     }
@@ -302,8 +317,6 @@ class ServiceController extends Controller
             ->withSum('part', 'price')
             ->get()
             ->toArray();
-
-
 
         $biaya_part = array_sum(array_column($total_part, 'part_sum_price'));
         $biaya_total = $biaya_jasa + $biaya_part;

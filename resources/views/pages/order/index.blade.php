@@ -41,7 +41,7 @@
                                                     @if ($item->is_service == 1)
                                                         <a href="{{ url('/service/show', $item->id_service) }}"
                                                             class="text-link">
-                                                            {{ $item->service->code }}
+                                                            {{ $item->service->code ?? '' }}
                                                         </a>
                                                     @else
                                                         <span class="badge badge-light-danger">Tidak termasuk service</span>

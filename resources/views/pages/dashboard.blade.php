@@ -188,7 +188,8 @@
                                             <small>({{ $item->count . ' x Rp ' . number_format($item->part->price) }})</small>
                                             <h5 class="text-danger">Rp {{ number_format($item->total_price) }}</h5>
                                             <span
-                                                class="badge badge-{{ $item->is_service == 1 ? 'primary' : 'warning' }}">{{ $item->is_service == 1 ? 'Include || ' . $item->service->code : 'no-include' }}</span>
+                                                class="badge badge-{{ $item->is_service == 1 ? 'primary' : 'warning' }}">{{ $item->is_service == 1 ? 'Include || ' . ($item->service ? $item->service->code : '-') : 'no-include' }}
+                                            </span>
                                         </div>
                                     </div>
                                 @endforeach

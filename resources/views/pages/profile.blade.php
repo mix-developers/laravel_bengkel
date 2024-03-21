@@ -83,6 +83,14 @@
                                                     value="{{ old('email', Auth::user()->email) }}">
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="phone">Nomor HP<span
+                                                        class="small text-danger">*</span></label>
+                                                <input type="text" id="phone" class="form-control" name="phone"
+                                                    placeholder="08xxxxxx" value="{{ old('phone', Auth::user()->phone) }}">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-4">

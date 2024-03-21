@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Part;
 use App\Models\PartStok;
 use App\Models\Service;
@@ -70,14 +71,19 @@ class RerportController extends Controller
 
         $stok = ServicePart::where('created_at', '>=', $request->from_date)
             ->where('created_at', '<=', $request->to_date)
+            ->with('part')
             ->latest()
             ->get();
+
+        $order = Order::where('created_at', '>=', $request->from_date)
+            ->where('created_at', '<=', $request->to_date)->where('id_service', null)->with(['part', 'user'])->get();
 
         if ($stok->isEmpty()) {
             return redirect()->back()->with('danger', 'Data tidak tersedia');
         }
         $pdf = \PDF::loadview('pages/report/pdf/pdf_pengeluaran', [
             'data' => $stok,
+            'dataNoService' => $order,
             'title' => 'Laporan Pengeluaran Bengkel Intan Jaya',
             'from_date' => $request->from_date,
             'to_date' => $request->to_date,
